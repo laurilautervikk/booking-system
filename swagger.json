@@ -1,0 +1,654 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Booking System API",
+    "version": "1.0.0",
+    "description": "Booking System API docs"
+  },
+  "paths": {
+    "/times": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/timesResponse"
+                },
+                "examples": {
+                  "time": {
+                    "value": [
+                      {
+                        "id": 3,
+                        "day": "2022-02-16",
+                        "start": "8:30",
+                        "end": "9:00",
+                        "bookedBy": ""
+                      },
+                      {
+                        "id": 5,
+                        "day": "2022-11-14",
+                        "start": "2:00",
+                        "end": "3:30",
+                        "bookedBy": ""
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Return list of times"
+          }
+        }
+      },
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/timesRequest"
+              },
+              "examples": {
+                "request body": {
+                  "$ref": "#/components/schemas/timesRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/timesResponse"
+                },
+                "examples": {
+                  "Edit response when logged in": {
+                    "request body": {
+                      "$ref": "#/components/schemas/timesResponse"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Request when logged in"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "You have to login"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Request without being logged in"
+          }
+        }
+      }
+    },
+    "/times/edit/{id}": {
+      "patch": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/timesRequest"
+              },
+              "examples": {
+                "request body": {
+                  "$ref": "#/components/schemas/timesRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/timesResponse"
+                },
+                "examples": {
+                  "request body": {
+                    "$ref": "#/components/schemas/timesResponse"
+                  }
+                }
+              }
+            },
+            "description": "Request when logged in"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "Error message"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Request body is missing information"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "You have to login"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Request without being logged in"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "examples": {
+            "time id example": {
+              "value": "1"
+            }
+          },
+          "name": "id",
+          "description": "time id",
+          "schema": {
+            "type": "integer"
+          },
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
+    "/times/{id}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/timesResponse"
+                },
+                "examples": {
+                  "request body": {
+                    "$ref": "#/components/schemas/timesResponse"
+                  }
+                }
+              }
+            },
+            "description": "Request when logged in"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "value": [
+                    {
+                      "error": "Time not found"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Return time by id"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Not logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "You have to login"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "Invalid id"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sessionId": {
+                    "example": "1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/timesRequest"
+              },
+              "examples": {
+                "request body": {
+                  "$ref": "#/components/schemas/timesRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/timesResponse"
+                },
+                "examples": {
+                  "request body": {
+                    "$ref": "#/components/schemas/timesResponse"
+                  }
+                }
+              }
+            },
+            "description": "Request when logged in"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "Error message"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Request body is missing information"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "Not found"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "No record with given id"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "examples": {
+            "time id example": {
+              "value": "1"
+            }
+          },
+          "name": "id",
+          "description": "time id",
+          "schema": {
+            "type": "integer"
+          },
+          "in": "path",
+          "required": true
+        }
+      ]
+    },
+    "/times/available": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/timesResponse"
+                },
+                "examples": {
+                  "time": {
+                    "value": [
+                      {
+                        "id": 3,
+                        "day": "2022-02-16",
+                        "start": "8:30",
+                        "end": "9:00",
+                        "bookedBy": ""
+                      },
+                      {
+                        "id": 5,
+                        "day": "2022-11-14",
+                        "start": "2:00",
+                        "end": "3:30",
+                        "bookedBy": ""
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Returns a list of available times"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "Create user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "example": "Admin"
+                  },
+                  "password": {
+                    "example": "Password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sessionsResponse"
+                },
+                "examples": {
+                  "request body": {
+                    "$ref": "#/components/schemas/sessionsResponse"
+                  }
+                }
+              }
+            },
+            "description": "Upon user creation returns session id"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "Error message"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Request body is missing information"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "Conflict: The user already exists."
+                    }
+                  }
+                }
+              }
+            },
+            "description": "User already exists"
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/sessionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sessionsResponse"
+                },
+                "examples": {
+                  "postSessions": {
+                    "value": {
+                      "sessionId": 2
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Logged in"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "error": "Error message"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Request body is missing information"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized: username or password is incorrect": {
+                    "value": {
+                      "error": "Unauthorized: username or password is incorrect"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized: username or password is incorrect"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sessionId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "error": {
+        "title": "Root Type for error",
+        "description": "error",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "error": "Error description"
+        }
+      },
+      "sessionsResponse": {
+        "title": "Root Type for sessionsResponse",
+        "description": "",
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "example": {
+          "sessionId": 2
+        }
+      },
+      "sessionsRequest": {
+        "title": "Root Type for sessionsRequest",
+        "description": "",
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "password": "Password",
+          "username": "Admin"
+        }
+      },
+      "timesResponse": {
+        "title": "Root Type for timesResponse",
+        "description": "",
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "day": { "type": "string" },
+          "start": { "type": "string" },
+          "end": { "type": "string" },
+          "bookedBy": { "type": "string" },
+          "phone": { "type": "string" }
+        },
+        "example": {
+          "id": 3,
+          "day": "2022-02-16",
+          "start": "8:30",
+          "end": "9:00",
+          "bookedBy": "Admin",
+          "phone": "56456456"
+        }
+      },
+      "timesRequest": {
+        "title": "Root Type for timesRequest",
+        "description": "",
+        "type": "object",
+        "properties": {
+          "sessionId": { "type": "integer" },
+          "id": { "type": "integer" },
+          "day": { "type": "string" },
+          "start": { "type": "string" },
+          "end": { "type": "string" },
+          "name": { "type": "string" },
+          "phone": { "type": "string" }
+        },
+        "example": {
+          "sessionId": "1",
+          "id": 1,
+          "day": "2025-02-16",
+          "start": "8:30",
+          "end": "9:00",
+          "name": "SomeBody",
+          "phone": "56456456"
+        }
+      }
+    }
+  }
+}
