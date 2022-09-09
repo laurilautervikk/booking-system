@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "swagger-autogen": "node swagger.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +17,6 @@
     "express-ws": "^5.0.2",
     "nodemon": "^2.0.19",
     "query-string": "^7.1.1",
-    "swagger-autogen": "^2.21.5",
     "swagger-ui-express": "^4.5.0",
     "vue": "^3.2.38",
     "websocket": "^1.0.34",

@@ -5,9 +5,25 @@
     "version": "1.0.0",
     "description": "Booking System API docs"
   },
+  "tags": [
+    {
+      "name": "Times",
+      "description": "Handling booking times"
+    },
+    {
+      "name": "Users",
+      "description": "Operations about user"
+    },
+    {
+      "name": "Sessions",
+      "description": "Logging in users"
+    }
+  ],
   "paths": {
     "/times": {
       "get": {
+        "tags": ["Times"],
+        "description": "Get a list of all times",
         "responses": {
           "200": {
             "content": {
@@ -37,11 +53,13 @@
                 }
               }
             },
-            "description": "Return list of times"
+            "description": "Returns list of times"
           }
         }
       },
       "post": {
+        "tags": ["Times"],
+        "description": "Create a new time",
         "requestBody": {
           "content": {
             "application/json": {
@@ -58,6 +76,7 @@
         },
         "responses": {
           "200": {
+            "description": "Response when logged in",
             "content": {
               "application/json": {
                 "schema": {
@@ -71,10 +90,10 @@
                   }
                 }
               }
-            },
-            "description": "Request when logged in"
+            }
           },
           "401": {
+            "description": "Response without being logged in",
             "content": {
               "application/json": {
                 "schema": {
@@ -88,14 +107,15 @@
                   }
                 }
               }
-            },
-            "description": "Request without being logged in"
+            }
           }
         }
       }
     },
     "/times/edit/{id}": {
       "patch": {
+        "tags": ["Times"],
+        "description": "Edit time by id",
         "requestBody": {
           "content": {
             "application/json": {
@@ -113,6 +133,7 @@
         },
         "responses": {
           "200": {
+            "description": "Response when logged in",
             "content": {
               "application/json": {
                 "schema": {
@@ -124,10 +145,10 @@
                   }
                 }
               }
-            },
-            "description": "Request when logged in"
+            }
           },
           "400": {
+            "description": "Response when request body is missing information",
             "content": {
               "application/json": {
                 "schema": {
@@ -141,10 +162,10 @@
                   }
                 }
               }
-            },
-            "description": "Request body is missing information"
+            }
           },
           "401": {
+            "description": "Response when not logged in",
             "content": {
               "application/json": {
                 "schema": {
@@ -158,8 +179,7 @@
                   }
                 }
               }
-            },
-            "description": "Request without being logged in"
+            }
           }
         }
       },
@@ -182,9 +202,11 @@
     },
     "/times/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Times"],
+        "description": "Get time by id",
         "responses": {
           "200": {
+            "description": "Response when logged in",
             "content": {
               "application/json": {
                 "schema": {
@@ -196,30 +218,30 @@
                   }
                 }
               }
-            },
-            "description": "Request when logged in"
+            }
           },
           "404": {
+            "description": "Response when id does not exist",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/error"
                 },
                 "examples": {
-                  "value": [
-                    {
+                  "error": {
+                    "value": {
                       "error": "Time not found"
                     }
-                  ]
+                  }
                 }
               }
-            },
-            "description": "Return time by id"
+            }
           }
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Times"],
+        "description": "Delete time by id",
         "responses": {
           "200": {
             "description": "OK"
@@ -251,7 +273,7 @@
                 "examples": {
                   "error": {
                     "value": {
-                      "error": "Invalid id"
+                      "error": "Time not found"
                     }
                   }
                 }
@@ -275,6 +297,8 @@
         }
       },
       "patch": {
+        "tags": ["Times"],
+        "description": "Edit time by id",
         "requestBody": {
           "content": {
             "application/json": {
@@ -292,6 +316,7 @@
         },
         "responses": {
           "200": {
+            "description": "Response when logged in",
             "content": {
               "application/json": {
                 "schema": {
@@ -303,10 +328,10 @@
                   }
                 }
               }
-            },
-            "description": "Request when logged in"
+            }
           },
           "400": {
+            "description": "Response when request body is missing information",
             "content": {
               "application/json": {
                 "schema": {
@@ -320,10 +345,10 @@
                   }
                 }
               }
-            },
-            "description": "Request body is missing information"
+            }
           },
           "401": {
+            "description": "No record with given id",
             "content": {
               "application/json": {
                 "schema": {
@@ -337,8 +362,7 @@
                   }
                 }
               }
-            },
-            "description": "No record with given id"
+            }
           }
         }
       },
@@ -361,8 +385,11 @@
     },
     "/times/available": {
       "get": {
+        "tags": ["Times"],
+        "description": "Get available times",
         "responses": {
           "200": {
+            "description": "Returns a list of available times",
             "content": {
               "application/json": {
                 "schema": {
@@ -389,14 +416,14 @@
                   }
                 }
               }
-            },
-            "description": "Returns a list of available times"
+            }
           }
         }
       }
     },
     "/users": {
       "post": {
+        "tags": ["Users"],
         "description": "Create user",
         "requestBody": {
           "content": {
@@ -417,6 +444,7 @@
         },
         "responses": {
           "201": {
+            "description": "Upon user creation returns session id",
             "content": {
               "application/json": {
                 "schema": {
@@ -428,10 +456,10 @@
                   }
                 }
               }
-            },
-            "description": "Upon user creation returns session id"
+            }
           },
           "400": {
+            "description": "Response when request body is missing information",
             "content": {
               "application/json": {
                 "schema": {
@@ -445,10 +473,10 @@
                   }
                 }
               }
-            },
-            "description": "Request body is missing information"
+            }
           },
           "409": {
+            "description": "Response when user already exists",
             "content": {
               "application/json": {
                 "schema": {
@@ -462,14 +490,15 @@
                   }
                 }
               }
-            },
-            "description": "User already exists"
+            }
           }
         }
       }
     },
     "/sessions": {
       "post": {
+        "tags": ["Sessions"],
+        "description": "Log in the user",
         "requestBody": {
           "content": {
             "application/json": {
@@ -482,6 +511,7 @@
         },
         "responses": {
           "201": {
+            "description": "Login successful",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,10 +525,10 @@
                   }
                 }
               }
-            },
-            "description": "Logged in"
+            }
           },
           "400": {
+            "description": "Response when request body is missing information",
             "content": {
               "application/json": {
                 "schema": {
@@ -512,10 +542,10 @@
                   }
                 }
               }
-            },
-            "description": "Request body is missing information"
+            }
           },
           "401": {
+            "description": "Unauthorized: username or password is incorrect",
             "content": {
               "application/json": {
                 "schema": {
@@ -529,12 +559,12 @@
                   }
                 }
               }
-            },
-            "description": "Unauthorized: username or password is incorrect"
+            }
           }
         }
       },
       "delete": {
+        "tags": ["Sessions"],
         "description": "Delete user",
         "parameters": [],
         "responses": {

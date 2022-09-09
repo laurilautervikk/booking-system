@@ -6,17 +6,13 @@ var expressWs = require("express-ws")(app);
 app.use(cors()); // Avoid CORS errors in browsers
 app.use(express.json()); // Populate req.body
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger.json"); //temporarily not used
+const swaggerDocument = require("./swagger.json");
 
 //yaml conversion
 //YAML = require("yamljs");
 //const swaggerDocument = YAML.load("swagger.yaml");
 
-//for swagger-autogen
-//const swaggerFile = require("./swagger.json");
-
 // Get document, or throw exception on error
-//app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.ws("/", function (ws, req) {
@@ -247,7 +243,7 @@ app.get("/times/:id", (req, res) => {
   }
   res.send(time);
 });
-TODO: app.patch("/times/:id", (req, res) => {
+app.patch("/times/:id", (req, res) => {
   // Check that :id is a valid number
   if (Number.isInteger(req.params.id) && req.params.id > 0) {
     return res.status(400).send({ error: "Invalid id" });
